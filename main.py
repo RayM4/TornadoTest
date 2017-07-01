@@ -2,6 +2,7 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, RequestHandler, url
 
 
+# basic handler
 class MainHandler(RequestHandler):
     def get(self):
         self.write("hello world")
@@ -9,11 +10,13 @@ class MainHandler(RequestHandler):
         self.write("testing")
 
 
+# handler with parameters
 class StoryHandler(RequestHandler):
     def get(self, story_id):
         self.write("This is page is url %s" % story_id)
 
 
+# handler that can receive post data
 class MyFormHandler(RequestHandler):
     def get(self):
         self.write('<html><body><form action="/myform" method="POST">'
@@ -26,6 +29,7 @@ class MyFormHandler(RequestHandler):
         self.write("You wrote " + self.get_body_argument("message"))
 
 
+# url pattern mapping
 def make_app():
     return Application([
         url(r"/", MainHandler),
