@@ -1,6 +1,8 @@
 from tornado.ioloop import IOLoop
-from tornado.web import Application, RequestHandler, url
-
+from tornado.web import Application, RequestHandler, url, asynchronous, HTTPError
+from tornado.httpclient import AsyncHTTPClient
+from tornado.escape import json_decode
+from tornado.gen import coroutine
 
 # basic handler
 class MainHandler(RequestHandler):
@@ -27,6 +29,30 @@ class MyFormHandler(RequestHandler):
     def post(self):
         self.set_header("Content-Type", "text/plain")
         self.write("You wrote " + self.get_body_argument("message"))
+
+
+# call an api and print the response text
+class AsyncHandler(RequestHandler):
+    @asynchronous
+    def get(self):
+        http = AsyncHTTPClient()
+        http.fetch("some api url",
+                   callback=self.on_response)
+
+    def on_response(self, response):
+        if response.error: raise HTTPError(500)
+        json = json_decode(response.body)
+        self.write(json)
+
+
+# co-routine version
+class CoroHandler(RequestHandler):
+    @coroutine
+    def get(self):
+        http = AsyncHTTPClient()
+        response = yield http.fetch("some api url")
+        json = json_decode(response.body)
+        self.write(json)
 
 
 # url pattern mapping
