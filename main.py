@@ -4,6 +4,7 @@ from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import json_decode
 from tornado.gen import coroutine
 
+
 # basic handler
 class MainHandler(RequestHandler):
     def get(self):
@@ -11,6 +12,8 @@ class MainHandler(RequestHandler):
         self.write("<br>")
         self.write("testing")
 
+
+# html template example
 class ItemListHandler(RequestHandler):
     def get(self):
         items = [
@@ -21,6 +24,7 @@ class ItemListHandler(RequestHandler):
         ]
         self.render("templates/basic_item_list.html", title="Item List", items=items)
 
+
 # handler with parameters
 class StoryHandler(RequestHandler):
     def get(self, story_id):
@@ -30,10 +34,7 @@ class StoryHandler(RequestHandler):
 # handler that can receive post data
 class MyFormHandler(RequestHandler):
     def get(self):
-        self.write('<html><body><form action="/myform" method="POST">'
-                   '<input type="text" name="message">'
-                   '<input type="submit" value="Submit">'
-                   '</form></body></html>')
+        self.render("templates/form.html")
 
     def post(self):
         self.set_header("Content-Type", "text/plain")
