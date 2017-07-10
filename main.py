@@ -40,6 +40,13 @@ class StoryHandler(RequestHandler):
         self.write("This is page is url %s" % story_id)
 
 
+class MultipleStoryHandler(RequestHandler):
+    def get(self, story_id, content_id):
+        self.write("This is page is url %s" % story_id)
+        self.write("<br>")
+        self.write("content of page %s " % content_id)
+
+
 # handler that can receive post data
 class MyFormHandler(RequestHandler):
     def get(self):
@@ -81,6 +88,7 @@ def make_app():
         url(r"/items", ItemListHandler),
         url(r"/items_api", ItemJsonHandler),
         url(r"/story/([0-9]+)", StoryHandler, name="story"),
+        url(r"/m_story/([0-9]+)/([0-9]+)", MultipleStoryHandler),
         url(r"/myform", MyFormHandler),
         # example of a redirect
         url(r"/app", RedirectHandler, dict(url="/"))

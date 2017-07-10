@@ -28,3 +28,7 @@ class SessionController:
             # TODO: REMOVE DEBUG MESSAGES
             print("game:" + str(game_id) + " started")
             print("player id: " + str(user_id))
+
+    def get_game(self, user_id):
+        game_id = self.user_id_to_game_id_mapping[user_id]
+        return self.active_games[game_id]
