@@ -1,8 +1,17 @@
 from tornado.ioloop import IOLoop
 from tornado.web import Application, RequestHandler, url, asynchronous, HTTPError, RedirectHandler
 from tornado.httpclient import AsyncHTTPClient
-from tornado.escape import json_decode
+from tornado.escape import json_decode, json_encode
 from tornado.gen import coroutine
+
+from gameServer import make_game_server
+
+__ITEM__ = [
+    "someItem1",
+    "Item 2",
+    "The 3rd item",
+    "4th Item"
+]
 
 
 # basic handler
@@ -16,13 +25,13 @@ class MainHandler(RequestHandler):
 # html template example
 class ItemListHandler(RequestHandler):
     def get(self):
-        items = [
-            "someItem1",
-            "Item 2",
-            "The 3rd item",
-            "4th Item"
-        ]
-        self.render("templates/basic_item_list.html", title="Item List", items=items)
+        self.render("templates/basic_item_list.html", title="Item List", items=__ITEM__)
+
+
+# json handler
+class ItemJsonHandler(RequestHandler):
+    def get(self):
+        self.write(json_encode(__ITEM__))
 
 
 # handler with parameters
@@ -70,6 +79,7 @@ def make_app():
     return Application([
         url(r"/", MainHandler),
         url(r"/items", ItemListHandler),
+        url(r"/items_api", ItemJsonHandler),
         url(r"/story/([0-9]+)", StoryHandler, name="story"),
         url(r"/myform", MyFormHandler),
         # example of a redirect
@@ -79,4 +89,8 @@ def make_app():
 if __name__ == "__main__":
     app = make_app()
     app.listen(8888)
+
+    gameServer = make_game_server()
+    gameServer.listen(9000)
+
     IOLoop.current().start()
