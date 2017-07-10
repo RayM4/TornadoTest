@@ -11,6 +11,15 @@ class MainHandler(RequestHandler):
         self.write("<br>")
         self.write("testing")
 
+class ItemListHandler(RequestHandler):
+    def get(self):
+        items = [
+            "someItem1",
+            "Item 2",
+            "The 3rd item",
+            "4th Item"
+        ]
+        self.render("templates/basic_item_list.html", title="Item List", items=items)
 
 # handler with parameters
 class StoryHandler(RequestHandler):
@@ -59,6 +68,7 @@ class CoroHandler(RequestHandler):
 def make_app():
     return Application([
         url(r"/", MainHandler),
+        url(r"/items", ItemListHandler),
         url(r"/story/([0-9]+)", StoryHandler, name="story"),
         url(r"/myform", MyFormHandler),
         # example of a redirect
