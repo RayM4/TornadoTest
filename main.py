@@ -1,5 +1,5 @@
 from tornado.ioloop import IOLoop
-from tornado.web import Application, RequestHandler, url, asynchronous, HTTPError
+from tornado.web import Application, RequestHandler, url, asynchronous, HTTPError, RedirectHandler
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import json_decode
 from tornado.gen import coroutine
@@ -60,7 +60,9 @@ def make_app():
     return Application([
         url(r"/", MainHandler),
         url(r"/story/([0-9]+)", StoryHandler, name="story"),
-        url(r"/myform", MyFormHandler)
+        url(r"/myform", MyFormHandler),
+        # example of a redirect
+        url(r"/app", RedirectHandler, dict(url="/"))
     ])
 
 if __name__ == "__main__":
