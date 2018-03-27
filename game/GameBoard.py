@@ -19,3 +19,6 @@ class GameBoard:
         else:
             # TODO: handle invalid moves
             print("invalid move")
+
+    def get_board(self):
+        return self.board
