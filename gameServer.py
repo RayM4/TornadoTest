@@ -24,7 +24,7 @@ class GameMakeMoveHandler(RequestHandler):
     def get(self, user_id, loc_x, loc_y):
         game = __Game_Session__.get_game(user_id)
         game.make_move(user_id, loc_x, loc_y)
-        self.write(json_encode(game.board))
+        self.write(json_encode(game.get_board()))
 
 
 def make_game_server():
