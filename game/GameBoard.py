@@ -1,7 +1,6 @@
 class GameBoard:
-    __SIZE = 3
 
-    def __init__(self, size=__SIZE):
+    def __init__(self, size=3):
         # TODO: make dynamic
         self.board = [
             [0, 0, 0],
@@ -10,7 +9,7 @@ class GameBoard:
         ]
 
     def make_move(self, value, pos_x, pos_y):
-        if pos_x > __SIZE or pos_y > __SIZE:
+        if pos_x > 3 or pos_y > 3:
             print("invalid index")
             return
         if self.board[pos_x][pos_y] < 1:
