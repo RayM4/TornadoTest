@@ -102,6 +102,6 @@ if __name__ == "__main__":
 
     gameServer = make_game_server()
     gameServer.listen(__PORT_NUMBER)
-    print("Starting server in port:" + __PORT_NUMBER)
+    print("Starting server in port:" + str(__PORT_NUMBER))
 
     IOLoop.current().start()
