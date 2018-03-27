@@ -17,6 +17,9 @@ class GameSession:
     def get_game_id(self):
         return self.game_id
 
+    def get_game_board(self):
+        return self.game_board
+
     def make_move(self, player_id, pos_x, pos_y):
         # TODO: Do something about the type safety...
         self.game_board.make_move(int(player_id), int(pos_x), int(pos_y))
