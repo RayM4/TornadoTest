@@ -13,6 +13,8 @@ __ITEM__ = [
     "4th Item"
 ]
 
+__PORT_NUMBER = 9000
+
 
 # basic handler
 class MainHandler(RequestHandler):
@@ -99,6 +101,7 @@ if __name__ == "__main__":
     app.listen(8888)
 
     gameServer = make_game_server()
-    gameServer.listen(9000)
+    gameServer.listen(__PORT_NUMBER)
+    print("Starting server in port:" + __PORT_NUMBER)
 
     IOLoop.current().start()
